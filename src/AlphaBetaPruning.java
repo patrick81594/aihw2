@@ -76,8 +76,8 @@
  *     files that you will be changing.
  *      
  * 
- * @author Student(s) name(s) go here.
- * @version Date goes here
+ * @author Patrick Harvey && Brandon Koser.
+ * @version 4/4/18
  */
 public class AlphaBetaPruning {
 
@@ -160,17 +160,17 @@ public class AlphaBetaPruning {
 	public static double maxValue(GameState s, double alpha, double beta, int searchDepth, GameHeuristic h) {
 		if(searchDepth == 0 || s.isTerminalState()) {
 			
-			return GameHeuristic.h(s);
+			return h.h(s);
 		}
 		else {
 			for(GameState sucStates: s.getSuccessors()) {
 				if(sucStates.whoseTurn() == 1) {
 					alpha = Math.max(alpha, minValue(sucStates, alpha, beta, searchDepth -1, h));
-					if(alpha >= beta) {return beta;}
+					if(alpha >= beta) {return h.h(sucStates);}
 				}
 				else {
 					beta = Math.min(beta, maxValue(sucStates, alpha, beta, searchDepth -1, h));
-					if(beta <= alpha) {return alpha;}
+					if(beta <= alpha) {return h.h(sucStates);}
 				}
 			}
 		}
@@ -196,17 +196,18 @@ public class AlphaBetaPruning {
 	 */
 	public static double minValue(GameState s, double alpha, double beta, int searchDepth, GameHeuristic h) {
 		if(searchDepth == 0 || s.isTerminalState()) {
-			return GameHeuristic.h(s);
+			return h.h(s);
 		}
 		else {
 			for(GameState sucStates: s.getSuccessors()) {
 				if(sucStates.whoseTurn() == 1) {
-					beta = Math.min(beta, maxValue(sucStates, alpha, beta, searchDepth -1, h));
-					if(beta <= alpha) {return alpha;}
+
+					alpha = Math.max(alpha, minValue(sucStates, alpha, beta, searchDepth -1, h));
+					if(alpha >= beta) {return h.h(sucStates);}
 				}
 				else {
-					alpha = Math.max(alpha, minValue(sucStates, alpha, beta, searchDepth -1, h));
-					if(alpha >= beta) {return beta;}
+					beta = Math.min(beta, maxValue(sucStates, alpha, beta, searchDepth -1, h));
+					if(beta <= alpha) {return h.h(sucStates);}
 					
 				}
 			}
