@@ -28,8 +28,5 @@
  * @version 3.15.2018
  */
 public interface GameHeuristic {
-	static double h(GameState s) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	double h(GameState s);
 }

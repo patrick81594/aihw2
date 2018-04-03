@@ -160,7 +160,7 @@ public class AlphaBetaPruning {
 	public static double maxValue(GameState s, double alpha, double beta, int searchDepth, GameHeuristic h) {
 		if(searchDepth == 0 || s.isTerminalState()) {
 			
-			return GameHeuristic.h(s);
+			return h.h(s);
 		}
 		else {
 			for(GameState sucStates: s.getSuccessors()) {
@@ -196,7 +196,7 @@ public class AlphaBetaPruning {
 	 */
 	public static double minValue(GameState s, double alpha, double beta, int searchDepth, GameHeuristic h) {
 		if(searchDepth == 0 || s.isTerminalState()) {
-			return GameHeuristic.h(s);
+			return h.h(s);
 		}
 		else {
 			for(GameState sucStates: s.getSuccessors()) {
